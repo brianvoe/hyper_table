@@ -1,4 +1,4 @@
-hyper_table
+Hyper Table
 ===========
 
 Advanced php table creation
