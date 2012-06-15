@@ -31,8 +31,12 @@ $table->set_table(array(
 ));
 $table->set_header(array(
 	'columns' => array(
-		'firstname' => array(
-			'title' =>'First Name',
+		array(
+			'title' => ''
+		),
+		array(
+			'dbval' => 'firstname',
+			'title' => 'First Name',
 			'style' => 'width:140px;',
 			'atag' => array(
 				'href' => 'http://www.hello.com',
@@ -40,13 +44,22 @@ $table->set_header(array(
 				'class' => 'a_firstname'
 			)
 		),
-        'lastname' => array(
-			'title' =>'Last Name',
+        array(
+        	'dbval' => 'lastname',
+			'title' => 'Last Name',
 			'class' => 'last_class',
 			'style' => 'width:180px;'
 		),
-		'created' => array(
+		array(
+			'dbval' => 'created',
 			'title' => 'Date'
+		),
+		array(
+			'title' => 'buttons',
+			'value' => '<img src="https://www.google.com/images/srpr/logo3w.png" />'
+		),
+		array(
+			'style' => 'width: 100px;'
 		)
 	)
 ));

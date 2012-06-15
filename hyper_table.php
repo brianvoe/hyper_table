@@ -18,11 +18,6 @@ class hyper_table {
 	// Body rows
 	public $body_rows = '';
 
-	function __construct() {
-		// set construct
-
-    }
-
     function set_table($table = array()) {
     	$this->table_id = (isset($table['id']) ? $table['id'] : $this->table_id);
     	$this->table_class = (isset($table['class']) ? $table['class'] : $this->table_class);
@@ -33,15 +28,19 @@ class hyper_table {
     }
 
     function set_header($header = array()) {
-    	$this->columns = array();
+    	$this->columns = $header;
 
     	$this->header_row = '<thead>';
     	$this->header_row .= '<tr>';
-    	foreach($header['columns'] as $key => $column) {
-    		array_push($this->columns, $key);
+    	foreach($header['columns'] as $column) {
+    		// Set variables
+    		$class = (isset($column['atag']['class']) ? 'class="'.$column['atag']['class'].'"': '');
+    		$title = (isset($column['atag']['title']) ? 'title="'.$column['atag']['title'].'"': '');
+    		$href = (isset($column['atag']['href']) ? $column['atag']['href']: '');
+
     		$this->header_row .= '<td>';
-    		$this->header_row .= (isset($column['atag']) ? '<a '.(isset($column['atag']['class']) ? 'class="'.$column['atag']['class'].'"': '').' '.(isset($column['atag']['title']) ? 'title="'.$column['atag']['title'].'"': '').' href="'.$column['atag']['href'].'">': '');
-    		$this->header_row .= $column['title'];
+    		$this->header_row .= (isset($column['atag']) ? '<a '.$class.' '.$title.' href="'.$href.'">': '');
+    		$this->header_row .= (isset($column['title']) ? $column['title']: '');
     		$this->header_row .= (isset($column['atag']) ? '</a>': '');
     		$this->header_row .= '</td>';
     	}
@@ -52,19 +51,36 @@ class hyper_table {
     function set_body($info = array()) {
     	$this->body_rows = '<tbody>';
     	foreach($info['info'] as $row) {
+    		// Loop through rows
     		$this->body_rows .= '<tr>';
     		foreach($this->columns as $column) {
+    			echo '<pre>';
+    			print_r($column);
+    			echo '</pre>';
+    			// Loop through columns
     			$this->body_rows .= '<td>';
-    			if(isset($info['funcs'][$column])) {
-    				$this->body_rows .= $info['funcs'][$column]($row[$column]);
-    			} else {
-    				$this->body_rows .= $row[$column];
-    			}
+
+
+
+    		// 	if(isset($column['value'])) {
+    		// 		$this->body_rows .= $column['value'];
+    		// 	} else {
+	    	// 		if(!isset($column['dbval']) && !isset($column['value'])){
+						// $this->body_rows .= '';
+	    	// 		} else {
+		    // 			if(isset($info['funcs'][$column['dbval']])) {
+		    // 				// If it has a function run to update value
+		    // 				$this->body_rows .= $info['funcs'][$column['dbval']]($row[$column]);
+		    // 			} else {
+		    // 				$this->body_rows .= $row[$column['dbval']];
+		    // 			}
+		    // 		}
+		    // 	}
     			$this->body_rows .= '</td>';
     		}
     		$this->body_rows .= '</tr>';
     	}
-    	$this->body_rows .= '</body>';
+    	$this->body_rows .= '</tbody>';
     }
 
     function generate() {
