@@ -70,21 +70,14 @@ class hyper_table {
     			// Loop through columns
     			$this->body_rows .= '<td>';
     			if(isset($column['value'])) {
-                    $value = $column['value'];
-
-                    // Replace {{}} items with respective dbvalues
-                    foreach($row as $dbkey => $dbvalue) {
-                        $value = str_replace('{{'.$dbkey.'}}', $dbvalue, $value);
-                    }
-
-    				$this->body_rows .= $value;
+    				$this->body_rows .= $this->replace_data($row, $column['value']);
     			} else {
-	    			if(!isset($column['dbval']) && !isset($column['value'])){
+	    			if(!isset($column['dbval'])){
 						$this->body_rows .= '';
 	    			} else {
 		    			if(isset($info['funcs'][$column['dbval']])) {
 		    				// If it has a function run to update value
-		    				$this->body_rows .= $info['funcs'][$column['dbval']]($row[$column['dbval']]);
+		    				$this->body_rows .= $this->replace_data($row, $info['funcs'][$column['dbval']]($row[$column['dbval']]));
 		    			} else {
 		    				$this->body_rows .= $row[$column['dbval']];
 		    			}
@@ -114,8 +107,12 @@ class hyper_table {
     	return $table;
     }
 
-    function replace_data() {
-        return 'hampy';
+    function replace_data($row_info, $value) {
+        // Replace {{column}} is dbvalue
+        foreach($row_info as $dbkey => $dbvalue) {
+            $value = str_replace('{{'.$dbkey.'}}', $dbvalue, $value);
+        }
+        return $value;
     }
 
 }

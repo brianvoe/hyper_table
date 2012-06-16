@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-
 $test_data = (object) array(
     array(
     	'id' => 23,
@@ -77,7 +75,7 @@ $table->set_body(array(
 			return date('F j, Y, g:i a', strtotime($date));
 		},
 		'firstname' => function($firstname) {
-			return $firstname.' '.$this->replace_data();
+			return $firstname.' {{lastname}}';
 		}
 	)
 ));
