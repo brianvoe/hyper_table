@@ -9,14 +9,16 @@ class hyper_table {
 	public $table_padding = 0;
 	public $table_spacing = 0;
 
+    // Header row
+    public $header_row = '';
+
 	// Columns
 	public $columns = array();
 
-	// Header row
-	public $header_row = '';
-
 	// Body rows
-	public $body_rows = '';
+    public $odd_class = '';
+    public $even_class = '';
+    public $body_rows = '';
 
     function set_table($table = array()) {
     	$this->table_id = (isset($table['id']) ? $table['id'] : $this->table_id);
@@ -28,7 +30,8 @@ class hyper_table {
     }
 
     function set_header($header = array()) {
-    	$this->columns = $header['columns'];
+        // if object convert to associative array
+    	$this->columns = (is_object($header['columns']) ? (array) $header['columns']: $header['columns']);
 
     	$this->header_row = '<thead>';
     	$this->header_row .= '<tr>';
@@ -49,10 +52,15 @@ class hyper_table {
     }
 
     function set_body($info = array()) {
+        // Set variables
+        $this->odd_class = (isset($info['odd_class']) ? 'class="'.$info['odd_class'].'"': ($this->odd_class == '' ? '': 'class="'.$this->odd_class.'"'));
+        $this->even_class = (isset($info['even_class']) ? 'class="'.$info['even_class'].'"': ($this->even_class == '' ? '': 'class="'.$this->even_class.'"'));
+        $row_num = 1;
+
     	$this->body_rows = '<tbody>';
     	foreach($info['info'] as $row) {
     		// Loop through rows
-    		$this->body_rows .= '<tr>';
+    		$this->body_rows .= '<tr '.($row_num % 2 ? $this->even_class: $this->odd_class).'>';
     		foreach($this->columns as $column) {
     			// Loop through columns
     			$this->body_rows .= '<td>';
@@ -71,7 +79,7 @@ class hyper_table {
 	    			} else {
 		    			if(isset($info['funcs'][$column['dbval']])) {
 		    				// If it has a function run to update value
-		    				$this->body_rows .= $info['funcs'][$column['dbval']]($row[$column]);
+		    				$this->body_rows .= $info['funcs'][$column['dbval']]($row[$column['dbval']]);
 		    			} else {
 		    				$this->body_rows .= $row[$column['dbval']];
 		    			}
@@ -80,6 +88,7 @@ class hyper_table {
     			$this->body_rows .= '</td>';
     		}
     		$this->body_rows .= '</tr>';
+            $row_num++;
     	}
     	$this->body_rows .= '</tbody>';
     }

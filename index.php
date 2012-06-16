@@ -1,6 +1,6 @@
 <?php
 
-$test_data = array(
+$test_data = (object) array(
     array(
     	'firstname' => 'Sally',
     	'lastname' => 'Mally',
@@ -64,6 +64,8 @@ $table->set_header(array(
 	)
 ));
 $table->set_body(array(
+	'even_class' => 'odd',
+	'odd_class' => 'even',
 	'info' => $test_data,
 	'funcs' => array(
 		'created' => function($date) {
