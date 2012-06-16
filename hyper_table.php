@@ -9,16 +9,21 @@ class hyper_table {
 	public $table_padding = 0;
 	public $table_spacing = 0;
 
+    // Set data
+    public $columns = array();
+    public $data = array();
+
     // Header row
     public $header_row = '';
-
-	// Columns
-	public $columns = array();
 
 	// Body rows
     public $odd_class = '';
     public $even_class = '';
     public $body_rows = '';
+
+    function set_info($info = array()) {
+        $this->data = (is_object($info) ? (array) $info: $info);
+    }
 
     function set_table($table = array()) {
     	$this->table_id = (isset($table['id']) ? $table['id'] : $this->table_id);
@@ -31,7 +36,7 @@ class hyper_table {
 
     function set_header($header = array()) {
         // if object convert to associative array
-    	$this->columns = (is_object($header['columns']) ? (array) $header['columns']: $header['columns']);
+    	$this->columns = $header['columns'];
 
     	$this->header_row = '<thead>';
     	$this->header_row .= '<tr>';
@@ -58,7 +63,7 @@ class hyper_table {
         $row_num = 1;
 
     	$this->body_rows = '<tbody>';
-    	foreach($info['info'] as $row) {
+    	foreach($this->data as $row) {
     		// Loop through rows
     		$this->body_rows .= '<tr '.($row_num % 2 ? $this->even_class: $this->odd_class).'>';
     		foreach($this->columns as $column) {
@@ -107,6 +112,10 @@ class hyper_table {
     	$table .= '</table>';
 
     	return $table;
+    }
+
+    function replace_data() {
+        return 'hampy';
     }
 
 }

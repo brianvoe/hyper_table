@@ -1,17 +1,22 @@
 <?php
 
+error_reporting(E_ALL);
+
 $test_data = (object) array(
     array(
+    	'id' => 23,
     	'firstname' => 'Sally',
     	'lastname' => 'Mally',
     	'created' => '2011-01-18 11:12:44'
     ),
     array(
+    	'id' => 57,
     	'firstname' => 'Billy',
     	'lastname' => 'Mister',
     	'created' => '1985-09-12 08:08:53'
     ),
     array(
+    	'id' => 82,
     	'firstname' => 'Tammy',
     	'lastname' => 'Wilkson',
     	'created' => '1969-06-14 05:09:32'
@@ -21,6 +26,7 @@ $test_data = (object) array(
 include_once('hyper_table.php');
 
 $table = new hyper_table();
+$table->set_info($test_data);
 $table->set_table(array(
     'id' => 'table_id',
     'class' => 'table_class',
@@ -66,10 +72,12 @@ $table->set_header(array(
 $table->set_body(array(
 	'even_class' => 'odd',
 	'odd_class' => 'even',
-	'info' => $test_data,
 	'funcs' => array(
 		'created' => function($date) {
 			return date('F j, Y, g:i a', strtotime($date));
+		},
+		'firstname' => function($firstname) {
+			return $firstname.' '.$this->replace_data();
 		}
 	)
 ));
