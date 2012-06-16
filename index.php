@@ -56,7 +56,7 @@ $table->set_header(array(
 		),
 		array(
 			'title' => 'buttons',
-			'value' => '<img src="https://www.google.com/images/srpr/logo3w.png" />'
+			'value' => '<img id="{{firstname}}" src="https://www.google.com/images/srpr/logo3w.png" />'
 		),
 		array(
 			'style' => 'width: 100px;'

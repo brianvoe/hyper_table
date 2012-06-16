@@ -28,11 +28,11 @@ class hyper_table {
     }
 
     function set_header($header = array()) {
-    	$this->columns = $header;
+    	$this->columns = $header['columns'];
 
     	$this->header_row = '<thead>';
     	$this->header_row .= '<tr>';
-    	foreach($header['columns'] as $column) {
+    	foreach($this->columns as $column) {
     		// Set variables
     		$class = (isset($column['atag']['class']) ? 'class="'.$column['atag']['class'].'"': '');
     		$title = (isset($column['atag']['title']) ? 'title="'.$column['atag']['title'].'"': '');
@@ -54,28 +54,29 @@ class hyper_table {
     		// Loop through rows
     		$this->body_rows .= '<tr>';
     		foreach($this->columns as $column) {
-    			echo '<pre>';
-    			print_r($column);
-    			echo '</pre>';
     			// Loop through columns
     			$this->body_rows .= '<td>';
+    			if(isset($column['value'])) {
+                    $value = $column['value'];
 
+                    // Replace {{}} items with respective dbvalues
+                    foreach($row as $dbkey => $dbvalue) {
+                        $value = str_replace('{{'.$dbkey.'}}', $dbvalue, $value);
+                    }
 
-
-    		// 	if(isset($column['value'])) {
-    		// 		$this->body_rows .= $column['value'];
-    		// 	} else {
-	    	// 		if(!isset($column['dbval']) && !isset($column['value'])){
-						// $this->body_rows .= '';
-	    	// 		} else {
-		    // 			if(isset($info['funcs'][$column['dbval']])) {
-		    // 				// If it has a function run to update value
-		    // 				$this->body_rows .= $info['funcs'][$column['dbval']]($row[$column]);
-		    // 			} else {
-		    // 				$this->body_rows .= $row[$column['dbval']];
-		    // 			}
-		    // 		}
-		    // 	}
+    				$this->body_rows .= $value;
+    			} else {
+	    			if(!isset($column['dbval']) && !isset($column['value'])){
+						$this->body_rows .= '';
+	    			} else {
+		    			if(isset($info['funcs'][$column['dbval']])) {
+		    				// If it has a function run to update value
+		    				$this->body_rows .= $info['funcs'][$column['dbval']]($row[$column]);
+		    			} else {
+		    				$this->body_rows .= $row[$column['dbval']];
+		    			}
+		    		}
+		    	}
     			$this->body_rows .= '</td>';
     		}
     		$this->body_rows .= '</tr>';
