@@ -6,8 +6,8 @@ $test_data = (object) array(
     	'firstname' => 'Sally',
     	'lastname' => 'Mally',
     	'created' => '2011-01-18 11:12:44',
-    	'product_sales' => 52.00,
-    	'event_sales' => 43.98
+    	'product_sales' => 26.52,
+    	'event_sales' => 102.87
     ),
     array(
     	'id' => 57,
@@ -22,8 +22,8 @@ $test_data = (object) array(
     	'firstname' => 'Tammy',
     	'lastname' => 'Wilkson',
     	'created' => '1969-06-14 05:09:32',
-    	'product_sales' => 52.00,
-    	'event_sales' => 43.98
+    	'product_sales' => 72.65,
+    	'event_sales' => 5.96
     )
 );
 
@@ -65,10 +65,10 @@ $table->set_header(array(
 			'title' => 'Date'
 		),
 		array(
-			'title' => 'buttons',
-			'value' => '<img id="{{firstname}}" src="https://www.google.com/images/srpr/logo3w.png" />'
+			'value' => '<img id="{{id}}" src="https://www.google.com/images/srpr/logo3w.png" />'
 		),
 		array(
+			'title' => 'Empty',
 			'style' => 'width: 100px;'
 		)
 	)
