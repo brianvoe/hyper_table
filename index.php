@@ -5,19 +5,25 @@ $test_data = (object) array(
     	'id' => 23,
     	'firstname' => 'Sally',
     	'lastname' => 'Mally',
-    	'created' => '2011-01-18 11:12:44'
+    	'created' => '2011-01-18 11:12:44',
+    	'product_sales' => 52.00,
+    	'event_sales' => 43.98
     ),
     array(
     	'id' => 57,
     	'firstname' => 'Billy',
     	'lastname' => 'Mister',
-    	'created' => '1985-09-12 08:08:53'
+    	'created' => '1985-09-12 08:08:53',
+    	'product_sales' => 52.00,
+    	'event_sales' => 43.98
     ),
     array(
     	'id' => 82,
     	'firstname' => 'Tammy',
     	'lastname' => 'Wilkson',
-    	'created' => '1969-06-14 05:09:32'
+    	'created' => '1969-06-14 05:09:32',
+    	'product_sales' => 52.00,
+    	'event_sales' => 43.98
     )
 );
 
@@ -74,8 +80,8 @@ $table->set_body(array(
 		'created' => function($date) {
 			return date('F j, Y, g:i a', strtotime($date));
 		},
-		'firstname' => function($firstname) {
-			return $firstname.' {{lastname}}';
+		'firstname' => function($firstname,$table) {
+			return $firstname.' {{lastname}}'." ".($table->replace_data('{{product_sales}}') + $table->replace_data('{{event_sales}}'));
 		}
 	)
 ));

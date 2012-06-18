@@ -15,6 +15,7 @@ class hyper_table {
 
     // Header row
     public $header_row = '';
+	public $row_info_num = 0;
 
 	// Body rows
     public $odd_class = '';
@@ -61,6 +62,7 @@ class hyper_table {
         $this->odd_class = (isset($info['odd_class']) ? 'class="'.$info['odd_class'].'"': ($this->odd_class == '' ? '': 'class="'.$this->odd_class.'"'));
         $this->even_class = (isset($info['even_class']) ? 'class="'.$info['even_class'].'"': ($this->even_class == '' ? '': 'class="'.$this->even_class.'"'));
         $row_num = 1;
+		$this->row_info_num = 0;
 
     	$this->body_rows = '<tbody>';
     	foreach($this->data as $row) {
@@ -70,14 +72,14 @@ class hyper_table {
     			// Loop through columns
     			$this->body_rows .= '<td>';
     			if(isset($column['value'])) {
-    				$this->body_rows .= $this->replace_data($row, $column['value']);
+    				$this->body_rows .= $this->replace_data($column['value']);
     			} else {
 	    			if(!isset($column['dbval'])){
 						$this->body_rows .= '';
 	    			} else {
 		    			if(isset($info['funcs'][$column['dbval']])) {
 		    				// If it has a function run to update value
-		    				$this->body_rows .= $this->replace_data($row, $info['funcs'][$column['dbval']]($row[$column['dbval']]));
+		    				$this->body_rows .= $this->replace_data($info['funcs'][$column['dbval']]($row[$column['dbval']],$this));
 		    			} else {
 		    				$this->body_rows .= $row[$column['dbval']];
 		    			}
@@ -87,6 +89,7 @@ class hyper_table {
     		}
     		$this->body_rows .= '</tr>';
             $row_num++;
+			$this->row_info_num++;
     	}
     	$this->body_rows .= '</tbody>';
     }
@@ -107,7 +110,8 @@ class hyper_table {
     	return $table;
     }
 
-    function replace_data($row_info, $value) {
+    function replace_data($value) {
+    	$row_info = $this->data[$this->row_info_num];
         // Replace {{column}} is dbvalue
         foreach($row_info as $dbkey => $dbvalue) {
             $value = str_replace('{{'.$dbkey.'}}', $dbvalue, $value);
