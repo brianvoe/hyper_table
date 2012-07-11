@@ -66,6 +66,7 @@ class hyper_table {
 
     	$this->body_rows = '<tbody>';
     	foreach($this->data as $row) {
+            $row = (is_object($row) ? (array) $row: $row); // Ensure its an array
     		// Loop through rows
     		$this->body_rows .= '<tr '.($row_num % 2 ? $this->even_class: $this->odd_class).'>';
     		foreach($this->columns as $column) {
