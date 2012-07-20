@@ -80,7 +80,7 @@ class hyper_table {
 	    			} else {
 		    			if(isset($info['funcs'][$column['func']])) {
 		    				// If it has a function run to update value
-		    				$this->body_rows .= $this->replace_data($info['funcs'][$column['func']]($row[$column['func']],$this));
+		    				$this->body_rows .= $this->replace_data($info['funcs'][$column['func']]($this));
 		    			} else {
 		    				$this->body_rows .= $row[$column['func']];
 		    			}
