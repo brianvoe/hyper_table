@@ -42,9 +42,11 @@ $table->set_table(array(
 $table->set_header(array(
 	'columns' => array(
 		array(
-			'title' => ''
+			'title' => 'Item',
+			'func' => 'item'
 		),
 		array(
+			'func' => 'firstname',
 			'dbval' => 'firstname',
 			'title' => 'First Name',
 			'style' => 'width:140px;',
@@ -62,7 +64,8 @@ $table->set_header(array(
 		),
 		array(
 			'dbval' => 'created',
-			'title' => 'Date'
+			'title' => 'Date',
+			'func' => 'created'
 		),
 		array(
 			'value' => '<img id="{{id}}" src="https://www.google.com/images/srpr/logo3w.png" />'
@@ -77,6 +80,9 @@ $table->set_body(array(
 	'even_class' => 'odd',
 	'odd_class' => 'even',
 	'funcs' => array(
+		'item' => function() {
+			return 'hello';
+		},
 		'created' => function($date) {
 			return date('F j, Y, g:i a', strtotime($date));
 		},

@@ -75,14 +75,14 @@ class hyper_table {
     			if(isset($column['value'])) {
     				$this->body_rows .= $this->replace_data($column['value']);
     			} else {
-	    			if(!isset($column['dbval'])){
+	    			if(!isset($column['func'])){
 						$this->body_rows .= '';
 	    			} else {
-		    			if(isset($info['funcs'][$column['dbval']])) {
+		    			if(isset($info['funcs'][$column['func']])) {
 		    				// If it has a function run to update value
-		    				$this->body_rows .= $this->replace_data($info['funcs'][$column['dbval']]($row[$column['dbval']],$this));
+		    				$this->body_rows .= $this->replace_data($info['funcs'][$column['func']]($row[$column['func']],$this));
 		    			} else {
-		    				$this->body_rows .= $row[$column['dbval']];
+		    				$this->body_rows .= $row[$column['func']];
 		    			}
 		    		}
 		    	}
