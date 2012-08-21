@@ -47,7 +47,7 @@ class hyper_table {
     		$title = (isset($column['atag']['title']) ? 'title="'.$column['atag']['title'].'"': '');
     		$href = (isset($column['atag']['href']) ? $column['atag']['href']: '');
 
-    		$this->header_row .= '<td>';
+    		$this->header_row .= '<td '.(isset($column['style']) ? 'style="'.$column['style'].'"': '').'>';
     		$this->header_row .= (isset($column['atag']) ? '<a '.$class.' '.$title.' href="'.$href.'">': '');
     		$this->header_row .= (isset($column['title']) ? $column['title']: '');
     		$this->header_row .= (isset($column['atag']) ? '</a>': '');

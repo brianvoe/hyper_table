@@ -83,8 +83,8 @@ $table->set_body(array(
 		'item' => function() {
 			return 'hello';
 		},
-		'created' => function($date) {
-			return date('F j, Y, g:i a', strtotime($date));
+		'created' => function($table) {
+			return date('F j, Y, g:i a', strtotime($table->replace_data('{{created}}')));
 		},
 		'firstname' => function($table) {
 			return '{{firstname}} {{lastname}}'." ".($table->replace_data('{{product_sales}}') + $table->replace_data('{{event_sales}}'));
