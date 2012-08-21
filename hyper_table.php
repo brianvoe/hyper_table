@@ -65,33 +65,35 @@ class hyper_table {
 		$this->row_info_num = 0;
 
     	$this->body_rows = '<tbody>';
-    	foreach($this->data as $row) {
-            $row = (is_object($row) ? (array) $row: $row); // Ensure its an array
-    		// Loop through rows
-    		$this->body_rows .= '<tr '.($row_num % 2 ? $this->even_class: $this->odd_class).'>';
-    		foreach($this->columns as $column) {
-    			// Loop through columns
-    			$this->body_rows .= '<td>';
-    			if(isset($column['value'])) {
-    				$this->body_rows .= $this->replace_data($column['value']);
-    			} else {
-	    			if(!isset($column['func'])){
-						$this->body_rows .= '';
-	    			} else {
-		    			if(isset($info['funcs'][$column['func']])) {
-		    				// If it has a function run to update value
-		    				$this->body_rows .= $this->replace_data($info['funcs'][$column['func']]($this));
-		    			} else {
-		    				$this->body_rows .= $row[$column['func']];
-		    			}
-		    		}
-		    	}
-    			$this->body_rows .= '</td>';
-    		}
-    		$this->body_rows .= '</tr>';
-            $row_num++;
-			$this->row_info_num++;
-    	}
+        if($this->data){
+        	foreach($this->data as $row) {
+                $row = (is_object($row) ? (array) $row: $row); // Ensure its an array
+        		// Loop through rows
+        		$this->body_rows .= '<tr '.($row_num % 2 ? $this->even_class: $this->odd_class).'>';
+        		foreach($this->columns as $column) {
+        			// Loop through columns
+        			$this->body_rows .= '<td>';
+        			if(isset($column['value'])) {
+        				$this->body_rows .= $this->replace_data($column['value']);
+        			} else {
+    	    			if(!isset($column['func'])){
+    						$this->body_rows .= '';
+    	    			} else {
+    		    			if(isset($info['funcs'][$column['func']])) {
+    		    				// If it has a function run to update value
+    		    				$this->body_rows .= $this->replace_data($info['funcs'][$column['func']]($this));
+    		    			} else {
+    		    				$this->body_rows .= $row[$column['func']];
+    		    			}
+    		    		}
+    		    	}
+        			$this->body_rows .= '</td>';
+        		}
+        		$this->body_rows .= '</tr>';
+                $row_num++;
+    			$this->row_info_num++;
+        	}
+        }
     	$this->body_rows .= '</tbody>';
     }
 
