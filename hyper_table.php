@@ -77,7 +77,7 @@ class hyper_table {
         				$this->body_rows .= $this->replace_data($column['value']);
         			} else {
     	    			if(!isset($column['func'])){
-    						$this->body_rows .= '';
+    						$this->body_rows .= $row[$column['dbval']];
     	    			} else {
     		    			if(isset($info['funcs'][$column['func']])) {
     		    				// If it has a function run to update value
