@@ -42,12 +42,16 @@ class hyper_table {
     	$this->header_row = '<thead>';
     	$this->header_row .= '<tr>';
     	foreach($this->columns as $column) {
-    		// Set variables
+            // Column variables
+            $c_style = (isset($column['style']) ? 'style="'.$column['style'].'"': '');
+            $c_class = (isset($column['class']) ? 'class="'.$column['class'].'"': '');
+
+    		// Set a tag variables
     		$class = (isset($column['atag']['class']) ? 'class="'.$column['atag']['class'].'"': '');
     		$title = (isset($column['atag']['title']) ? 'title="'.$column['atag']['title'].'"': '');
     		$href = (isset($column['atag']['href']) ? $column['atag']['href']: '');
 
-    		$this->header_row .= '<td '.(isset($column['style']) ? 'style="'.$column['style'].'"': '').'>';
+    		$this->header_row .= '<td '.$c_style.' '.$c_class.'>';
     		$this->header_row .= (isset($column['atag']) ? '<a '.$class.' '.$title.' href="'.$href.'">': '');
     		$this->header_row .= (isset($column['title']) ? $column['title']: '');
     		$this->header_row .= (isset($column['atag']) ? '</a>': '');

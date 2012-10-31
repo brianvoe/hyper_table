@@ -50,6 +50,7 @@ $table->set_header(array(
 			'dbval' => 'firstname',
 			'title' => 'First Name',
 			'style' => 'width:140px;',
+			'class' => 'column_class',
 			'atag' => array(
 				'href' => 'http://www.hello.com',
 				'title' => 'title firstname',
