@@ -120,7 +120,15 @@ class hyper_table {
     }
 
     function replace_data($value) {
-    	$row_info = $this->data[$this->row_info_num];
+    	$i = 0;
+        foreach($this->data as $data) {
+            if($i == $this->row_info_num) {
+                $row_info = $data;
+                break;
+            }
+            $i++;
+        }
+
         // Replace {{column}} is dbvalue
         foreach($row_info as $dbkey => $dbvalue) {
             $value = str_replace('{{'.$dbkey.'}}', $dbvalue, $value);
