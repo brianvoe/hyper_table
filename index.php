@@ -64,7 +64,6 @@ $table->set_header(array(
 			'style' => 'width:180px;'
 		),
 		array(
-			'dbval' => 'created',
 			'title' => 'Date',
 			'func' => 'created'
 		),
